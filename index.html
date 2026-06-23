@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="House by RB accompagne les maîtres d'œuvre en maisons individuelles dans le suivi commercial, technique et opérationnel de leurs projets."
+    >
+    <title>House by RB - Logiciel pour maîtres d'œuvre</title>
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navigation" aria-label="Navigation principale">
+        <a class="brand" href="#accueil" aria-label="House by RB - Accueil">
+          <span class="brand__mark" aria-hidden="true">RB</span>
+          <span class="brand__text">House by RB</span>
+        </a>
+        <button class="navigation__toggle" type="button" aria-expanded="false" aria-controls="menu-principal">
+          <span class="navigation__toggle-line"></span>
+          <span class="navigation__toggle-line"></span>
+          <span class="navigation__toggle-line"></span>
+          <span class="sr-only">Ouvrir le menu</span>
+        </button>
+        <ul class="navigation__links" id="menu-principal">
+          <li><a href="#solution">Solution</a></li>
+          <li><a href="#pilotage">Pilotage</a></li>
+          <li><a href="#methode">Méthode</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="accueil">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero__content">
+          <p class="eyebrow">Logiciel professionnel pour la maison individuelle</p>
+          <h1 id="hero-title">Pilotez vos chantiers, clients et marges avec une vision claire.</h1>
+          <p class="hero__description">
+            House by RB centralise le suivi des prospects, des dossiers techniques et des étapes chantier
+            pour aider les maîtres d'œuvre à sécuriser chaque projet.
+          </p>
+          <div class="hero__actions">
+            <a class="button button--primary" href="#contact">Demander une démonstration</a>
+            <a class="button button--secondary" href="#solution">Découvrir la solution</a>
+          </div>
+        </div>
+        <aside class="hero-card" aria-label="Indicateurs clés">
+          <p class="hero-card__label">Vue projet</p>
+          <div class="hero-card__status">
+            <span class="status-dot" aria-hidden="true"></span>
+            Portefeuille maîtrisé
+          </div>
+          <dl class="hero-card__metrics" id="indicateurs-projet"></dl>
+        </aside>
+      </section>
+
+      <section class="section" id="solution" aria-labelledby="solution-title">
+        <div class="section__intro">
+          <p class="eyebrow">Solution métier</p>
+          <h2 id="solution-title">Une organisation pensée pour les maîtres d'œuvre.</h2>
+          <p>
+            Les informations critiques restent accessibles, structurées et partagées afin de limiter les
+            ressaisies, les oublis et les pertes de temps.
+          </p>
+        </div>
+        <div class="feature-grid" id="fonctionnalites"></div>
+      </section>
+
+      <section class="section section--accent" id="pilotage" aria-labelledby="pilotage-title">
+        <div class="section__intro">
+          <p class="eyebrow">Pilotage</p>
+          <h2 id="pilotage-title">Suivre l'activité sans multiplier les tableaux.</h2>
+          <p>
+            Les indicateurs aident à prioriser les actions commerciales, techniques et financières avec une
+            lecture fiable de l'avancement.
+          </p>
+        </div>
+        <div class="metric-grid" id="indicateurs-activite"></div>
+      </section>
+
+      <section class="section" id="methode" aria-labelledby="methode-title">
+        <div class="section__intro">
+          <p class="eyebrow">Méthode</p>
+          <h2 id="methode-title">Un parcours clair de la prise de contact à la réception.</h2>
+        </div>
+        <ol class="timeline" id="etapes-projet"></ol>
+      </section>
+
+      <section class="cta" id="contact" aria-labelledby="contact-title">
+        <div>
+          <p class="eyebrow">House by RB</p>
+          <h2 id="contact-title">Construisons un outil fiable pour votre activité.</h2>
+          <p>
+            La base technique est prête pour accueillir progressivement les modules métier : prospects,
+            projets, documents, tâches et tableaux de bord.
+          </p>
+        </div>
+        <a class="button button--primary" href="mailto:contact@housebyrb.fr">Contacter l'équipe</a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; <span id="annee-courante"></span> House by RB. Tous droits réservés.</p>
+    </footer>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

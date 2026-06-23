@@ -1,0 +1,68 @@
+{
+  "projectMetrics": [
+    {
+      "label": "Dossiers actifs",
+      "value": "24"
+    },
+    {
+      "label": "Marge prévisionnelle",
+      "value": "18,7 %"
+    },
+    {
+      "label": "Actions prioritaires",
+      "value": "7"
+    }
+  ],
+  "features": [
+    {
+      "icon": "01",
+      "title": "Dossiers centralisés",
+      "description": "Regroupez les contacts, budgets, plans, documents et décisions dans une fiche projet claire."
+    },
+    {
+      "icon": "02",
+      "title": "Suivi opérationnel",
+      "description": "Visualisez les étapes clés, les tâches à traiter et les points bloquants avant qu'ils n'impactent le chantier."
+    },
+    {
+      "icon": "03",
+      "title": "Pilotage de marge",
+      "description": "Gardez une lecture fiable des montants, avenants et arbitrages pour protéger la rentabilité."
+    }
+  ],
+  "activityMetrics": [
+    {
+      "label": "Conversion prospects",
+      "value": "42 %",
+      "description": "Suivi des contacts qualifiés jusqu'au contrat."
+    },
+    {
+      "label": "Chantiers en phase critique",
+      "value": "3",
+      "description": "Alertes sur les projets qui demandent une action rapide."
+    },
+    {
+      "label": "Documents à valider",
+      "value": "12",
+      "description": "Pièces administratives ou techniques à contrôler."
+    }
+  ],
+  "steps": [
+    {
+      "title": "Qualification du prospect",
+      "description": "Collecter les besoins, le terrain, le budget et les contraintes réglementaires."
+    },
+    {
+      "title": "Montage du projet",
+      "description": "Structurer les estimatifs, documents, arbitrages et validations client."
+    },
+    {
+      "title": "Préparation chantier",
+      "description": "Sécuriser les intervenants, plannings, pièces techniques et points de vigilance."
+    },
+    {
+      "title": "Suivi et réception",
+      "description": "Piloter l'avancement, les réserves, les avenants et la clôture du dossier."
+    }
+  ]
+}
