@@ -48,6 +48,15 @@ export function getCommuneSearchRefs(documentRef = document) {
   };
 }
 
+export function getTerrainRefs(documentRef = document) {
+  return {
+    form: getElement(documentRef, "terrainForm"),
+    landPriceInput: getElement(documentRef, "landPriceInput"),
+    landSurfaceInput: getElement(documentRef, "landSurfaceInput"),
+    summary: getElement(documentRef, "terrainSummary")
+  };
+}
+
 export function setCommuneSearchLoading(refs, isLoading) {
   refs.submitButton.disabled = isLoading;
   refs.submitButton.textContent = isLoading ? "Recherche..." : "Rechercher";
@@ -102,6 +111,14 @@ export function renderTaxSummaryError(refs) {
       "tax-summary__error",
       "Les taux officiels ne sont pas disponibles pour le moment. Le calcul fiscal sera relancé automatiquement plus tard."
     )
+  );
+}
+
+export function renderTerrainSummary(refs, terrain, formatCurrency) {
+  refs.summary.replaceChildren(
+    createElement("h3", "", "Synthèse terrain"),
+    createTerrainMetrics(terrain, formatCurrency),
+    createTerrainWarnings(terrain)
   );
 }
 
@@ -228,9 +245,43 @@ function createTaxWarnings(rates) {
   return list;
 }
 
+function createTerrainMetrics(terrain, formatCurrency) {
+  const list = document.createElement("dl");
+  list.className = "terrain-summary__metrics";
+  list.append(
+    createDefinition("Prix du terrain", formatCurrency(terrain.landPrice)),
+    createDefinition("Surface", terrain.landSurface > 0 ? `${formatNumber(terrain.landSurface)} m²` : "-"),
+    createDefinition("Prix au m²", terrain.pricePerM2 > 0 ? `${formatCurrency(terrain.pricePerM2)}/m²` : "-"),
+    createDefinition("Catégorie", terrain.category.label)
+  );
+
+  return list;
+}
+
+function createTerrainWarnings(terrain) {
+  const list = document.createElement("ul");
+  list.className = "terrain-summary__warnings";
+
+  terrain.warnings.forEach((warning) => {
+    list.append(createElement("li", "", warning));
+  });
+
+  if (terrain.warnings.length === 0) {
+    list.append(createElement("li", "", "Données terrain suffisantes pour les prochains calculateurs."));
+  }
+
+  return list;
+}
+
 function formatPercent(value) {
   return new Intl.NumberFormat("fr-FR", {
     maximumFractionDigits: 2
+  }).format(value || 0);
+}
+
+function formatNumber(value) {
+  return new Intl.NumberFormat("fr-FR", {
+    maximumFractionDigits: 0
   }).format(value || 0);
 }
 

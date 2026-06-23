@@ -76,6 +76,33 @@
             <article class="commune-selected" id="selectedCommune" hidden></article>
             <article class="tax-summary" id="taxSummary" hidden></article>
 
+            <section class="terrain-panel" aria-labelledby="terrainTitle">
+              <p class="eyebrow">Étape 2</p>
+              <h2 id="terrainTitle">Qualifier le terrain</h2>
+              <p>
+                Ces informations alimenteront les frais de notaire, les VRD et le budget global.
+              </p>
+
+              <form class="terrain-form" id="terrainForm" autocomplete="off">
+                <div class="terrain-form__field">
+                  <label for="landPriceInput">Prix du terrain</label>
+                  <div class="field-with-suffix">
+                    <input id="landPriceInput" name="landPrice" type="number" min="0" step="1000" placeholder="Ex. 85000">
+                    <span>EUR</span>
+                  </div>
+                </div>
+                <div class="terrain-form__field">
+                  <label for="landSurfaceInput">Surface du terrain</label>
+                  <div class="field-with-suffix">
+                    <input id="landSurfaceInput" name="landSurface" type="number" min="0" step="1" placeholder="Ex. 520">
+                    <span>m²</span>
+                  </div>
+                </div>
+              </form>
+
+              <article class="terrain-summary" id="terrainSummary" aria-live="polite"></article>
+            </section>
+
             <div class="module-grid" id="moduleGrid" aria-label="Modules applicatifs"></div>
           </section>
         </section>

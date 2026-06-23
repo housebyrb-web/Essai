@@ -1,12 +1,15 @@
 import { calculateProject } from "./calculator.js";
 import { searchCommunes } from "./communes.js";
 import { calculateTaxes, createDefaultTaxInput, fetchTaxRatesForCommune } from "./taxe.js";
+import { calculateTerrain } from "./terrain.js";
 import {
   clearCommuneResults,
   getCommuneSearchRefs,
+  getTerrainRefs,
   initUi,
   renderCommuneResults,
   renderSelectedCommune,
+  renderTerrainSummary,
   renderTaxSummary,
   renderTaxSummaryError,
   setTaxSummaryLoading,
@@ -18,12 +21,17 @@ import { formatCurrency } from "./utils.js";
 
 const appState = {
   selectedCommune: null,
-  taxRates: null
+  taxRates: null,
+  terrain: {
+    landPrice: 0,
+    landSurface: 0
+  }
 };
 
 export function initApp(documentRef = document) {
   initUi(documentRef);
   initCommuneSearch(documentRef);
+  initTerrainForm(documentRef);
   calculateProject();
   updateStatus(documentRef, "Recherche commune prête");
 }
@@ -35,6 +43,28 @@ function initCommuneSearch(documentRef) {
     event.preventDefault();
     handleCommuneSearch(documentRef, refs);
   });
+}
+
+function initTerrainForm(documentRef) {
+  const refs = getTerrainRefs(documentRef);
+
+  refs.form.addEventListener("input", () => {
+    appState.terrain = {
+      landPrice: refs.landPriceInput.value,
+      landSurface: refs.landSurfaceInput.value
+    };
+    renderTerrain(documentRef, refs);
+  });
+  renderTerrain(documentRef, refs);
+}
+
+function renderTerrain(documentRef, refs) {
+  const terrain = calculateTerrain(appState.terrain);
+  renderTerrainSummary(refs, terrain, formatCurrency);
+
+  if (terrain.isComplete) {
+    updateStatus(documentRef, `Terrain ${formatCurrency(terrain.landPrice)}`);
+  }
 }
 
 async function handleCommuneSearch(documentRef, refs) {

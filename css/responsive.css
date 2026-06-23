@@ -35,7 +35,9 @@
 
   .commune-search__controls,
   .commune-selected dl,
-  .tax-summary__rates {
+  .tax-summary__rates,
+  .terrain-form,
+  .terrain-summary__metrics {
     grid-template-columns: 1fr;
   }
 

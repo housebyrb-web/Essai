@@ -413,6 +413,112 @@ h2 {
   margin: 12px 0 0;
 }
 
+.terrain-panel {
+  padding: 22px;
+  margin-top: 22px;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-large);
+}
+
+.terrain-panel h2 {
+  margin-bottom: 8px;
+}
+
+.terrain-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.terrain-form__field {
+  display: grid;
+  gap: 8px;
+}
+
+.terrain-form__field label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.field-with-suffix {
+  position: relative;
+}
+
+.field-with-suffix input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 62px 0 18px;
+  color: var(--color-text);
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+}
+
+.field-with-suffix input:focus {
+  outline: 3px solid rgba(236, 95, 126, 0.26);
+  outline-offset: 2px;
+}
+
+.field-with-suffix span {
+  position: absolute;
+  top: 50%;
+  right: 18px;
+  color: var(--color-faint);
+  font-size: 0.82rem;
+  font-weight: 800;
+  transform: translateY(-50%);
+}
+
+.terrain-summary {
+  padding: 18px;
+  margin-top: 16px;
+  background: linear-gradient(180deg, var(--color-panel), #ffffff);
+  border: 1px solid rgba(236, 95, 126, 0.18);
+  border-radius: var(--radius-medium);
+}
+
+.terrain-summary h3 {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+}
+
+.terrain-summary__metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+}
+
+.terrain-summary__metrics div {
+  padding: 10px;
+  background: #ffffff;
+  border-radius: 14px;
+}
+
+.terrain-summary__metrics dt {
+  color: var(--color-faint);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.terrain-summary__metrics dd {
+  margin: 2px 0 0;
+  font-weight: 850;
+}
+
+.terrain-summary__warnings {
+  padding-left: 18px;
+  margin: 12px 0 0;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
 .module-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

@@ -74,6 +74,19 @@ Le module `js/taxe.js` permet désormais :
 Sans adresse ni référence cadastrale, une commune sectorisée utilise le taux communal maximal afin d'éviter
 une sous-estimation. La sélection précise du secteur sera traitée dans une étape dédiée.
 
+## Étape 7 - Module terrain
+
+Le module `js/terrain.js` permet désormais :
+
+- la normalisation du prix du terrain ;
+- la normalisation de la surface terrain ;
+- le calcul du prix au m² ;
+- la catégorisation de la parcelle ;
+- la détection des informations manquantes ;
+- la remontée d'avertissements utiles pour les modules notaire, VRD et budget.
+
+Cette étape ne traite pas encore les VRD, les raccordements, le PLU ou la constructibilité fine.
+
 ## Commandes
 
 ```bash
