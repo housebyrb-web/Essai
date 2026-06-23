@@ -102,6 +102,49 @@
 
               <article class="terrain-summary" id="terrainSummary" aria-live="polite"></article>
               <article class="notaire-summary" id="notaireSummary" aria-live="polite"></article>
+
+              <section class="vrd-panel" aria-labelledby="vrdTitle">
+                <p class="eyebrow">Étape 3</p>
+                <h2 id="vrdTitle">Préparer les VRD</h2>
+                <p>
+                  Les VRD couvrent l'accès, les tranchées, les raccordements et les premières provisions
+                  techniques liées au terrain.
+                </p>
+
+                <form class="vrd-form" id="vrdForm" autocomplete="off">
+                  <div class="vrd-form__field">
+                    <label for="isServicedInput">Terrain viabilisé</label>
+                    <select id="isServicedInput" name="isServiced">
+                      <option value="false">Non, réseaux à créer</option>
+                      <option value="true">Oui, réseaux en attente</option>
+                    </select>
+                  </div>
+                  <div class="vrd-form__field">
+                    <label for="accessLengthInput">Longueur d'accès</label>
+                    <div class="field-with-suffix">
+                      <input id="accessLengthInput" name="accessLength" type="number" min="0" step="1" placeholder="Ex. 18">
+                      <span>m</span>
+                    </div>
+                  </div>
+                  <div class="vrd-form__field">
+                    <label for="networkDistanceInput">Distance aux réseaux</label>
+                    <div class="field-with-suffix">
+                      <input id="networkDistanceInput" name="networkDistance" type="number" min="0" step="1" placeholder="Ex. 25">
+                      <span>m</span>
+                    </div>
+                  </div>
+                  <label class="vrd-form__check">
+                    <input id="includeStormwaterInput" name="includeStormwater" type="checkbox" checked>
+                    <span>Prévoir une gestion des eaux pluviales</span>
+                  </label>
+                  <label class="vrd-form__check">
+                    <input id="needsIndividualSanitationInput" name="needsIndividualSanitation" type="checkbox">
+                    <span>Assainissement individuel à prévoir</span>
+                  </label>
+                </form>
+
+                <article class="vrd-summary" id="vrdSummary" aria-live="polite"></article>
+              </section>
             </section>
 
             <div class="module-grid" id="moduleGrid" aria-label="Modules applicatifs"></div>

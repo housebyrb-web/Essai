@@ -3,10 +3,12 @@ import { searchCommunes } from "./communes.js";
 import { calculateNotaireFees } from "./notaire.js";
 import { calculateTaxes, createDefaultTaxInput, fetchTaxRatesForCommune } from "./taxe.js";
 import { calculateTerrain } from "./terrain.js";
+import { calculateVrd } from "./vrd.js";
 import {
   clearCommuneResults,
   getCommuneSearchRefs,
   getTerrainRefs,
+  getVrdRefs,
   initUi,
   renderCommuneResults,
   renderNotaireSummary,
@@ -14,6 +16,7 @@ import {
   renderTerrainSummary,
   renderTaxSummary,
   renderTaxSummaryError,
+  renderVrdSummary,
   setTaxSummaryLoading,
   setCommuneSearchLoading,
   setCommuneSearchMessage,
@@ -27,6 +30,13 @@ const appState = {
   terrain: {
     landPrice: 0,
     landSurface: 0
+  },
+  vrd: {
+    isServiced: false,
+    accessLength: 0,
+    networkDistance: 0,
+    includeStormwater: true,
+    needsIndividualSanitation: false
   }
 };
 
@@ -34,6 +44,7 @@ export function initApp(documentRef = document) {
   initUi(documentRef);
   initCommuneSearch(documentRef);
   initTerrainForm(documentRef);
+  initVrdForm(documentRef);
   calculateProject();
   updateStatus(documentRef, "Recherche commune prête");
 }
@@ -68,6 +79,39 @@ function renderTerrain(documentRef, refs) {
 
   if (terrain.isComplete) {
     updateStatus(documentRef, `Terrain ${formatCurrency(terrain.landPrice)}`);
+  }
+}
+
+function initVrdForm(documentRef) {
+  const refs = getVrdRefs(documentRef);
+
+  refs.form.addEventListener("input", () => {
+    appState.vrd = getVrdInput(refs);
+    renderVrd(documentRef, refs);
+  });
+  refs.form.addEventListener("change", () => {
+    appState.vrd = getVrdInput(refs);
+    renderVrd(documentRef, refs);
+  });
+  renderVrd(documentRef, refs);
+}
+
+function getVrdInput(refs) {
+  return {
+    isServiced: refs.isServicedInput.value,
+    accessLength: refs.accessLengthInput.value,
+    networkDistance: refs.networkDistanceInput.value,
+    includeStormwater: refs.includeStormwaterInput.checked,
+    needsIndividualSanitation: refs.needsIndividualSanitationInput.checked
+  };
+}
+
+function renderVrd(documentRef, refs) {
+  const vrd = calculateVrd(appState.vrd);
+  renderVrdSummary(refs, vrd, formatCurrency);
+
+  if (vrd.total > 0) {
+    updateStatus(documentRef, `VRD ${formatCurrency(vrd.total)}`);
   }
 }
 

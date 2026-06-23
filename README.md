@@ -102,6 +102,22 @@ Le module `js/notaire.js` permet désormais :
 Le calcul reste indicatif : le régime fiscal exact dépend de l'acte, du terrain, de la TVA éventuelle
 et doit être confirmé par le notaire.
 
+## Étape 9 - Module VRD
+
+Le module `js/vrd.js` permet désormais :
+
+- l'estimation de l'accès terrain ;
+- l'estimation des tranchées techniques ;
+- l'estimation des raccordements selon terrain viabilisé ou non ;
+- l'ajout d'un surcoût lié à la distance aux réseaux ;
+- l'intégration d'une provision eaux pluviales ;
+- l'intégration optionnelle d'un assainissement individuel ;
+- l'ajout d'une provision d'aléas ;
+- la remontée d'avertissements techniques.
+
+Cette étape reste indicative : les devis concessionnaires, l'étude de sol, le SPANC et les contraintes
+d'accès chantier devront confirmer les montants.
+
 ## Commandes
 
 ```bash

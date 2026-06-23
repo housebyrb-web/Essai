@@ -58,6 +58,18 @@ export function getTerrainRefs(documentRef = document) {
   };
 }
 
+export function getVrdRefs(documentRef = document) {
+  return {
+    form: getElement(documentRef, "vrdForm"),
+    isServicedInput: getElement(documentRef, "isServicedInput"),
+    accessLengthInput: getElement(documentRef, "accessLengthInput"),
+    networkDistanceInput: getElement(documentRef, "networkDistanceInput"),
+    includeStormwaterInput: getElement(documentRef, "includeStormwaterInput"),
+    needsIndividualSanitationInput: getElement(documentRef, "needsIndividualSanitationInput"),
+    summary: getElement(documentRef, "vrdSummary")
+  };
+}
+
 export function setCommuneSearchLoading(refs, isLoading) {
   refs.submitButton.disabled = isLoading;
   refs.submitButton.textContent = isLoading ? "Recherche..." : "Rechercher";
@@ -129,6 +141,15 @@ export function renderNotaireSummary(refs, notaireFees, formatCurrency) {
     createNotaireAmount(notaireFees, formatCurrency),
     createNotaireDetails(notaireFees, formatCurrency),
     createNotaireWarnings(notaireFees)
+  );
+}
+
+export function renderVrdSummary(refs, vrd, formatCurrency) {
+  refs.summary.replaceChildren(
+    createElement("h3", "", "Synthèse VRD"),
+    createVrdAmount(vrd, formatCurrency),
+    createVrdDetails(vrd, formatCurrency),
+    createVrdWarnings(vrd)
   );
 }
 
@@ -320,6 +341,48 @@ function createNotaireWarnings(notaireFees) {
 
   if (notaireFees.warnings.length === 0) {
     list.append(createElement("li", "", "Estimation prête pour le budget global."));
+  }
+
+  return list;
+}
+
+function createVrdAmount(vrd, formatCurrency) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "vrd-summary__amount";
+  wrapper.append(
+    createElement("p", "vrd-summary__label", "Estimation indicative"),
+    createElement("p", "vrd-summary__value", formatCurrency(vrd.total)),
+    createElement("p", "vrd-summary__muted", `Sous-total : ${formatCurrency(vrd.subtotal)} · Aléas : ${formatCurrency(vrd.detail.contingency)}`)
+  );
+
+  return wrapper;
+}
+
+function createVrdDetails(vrd, formatCurrency) {
+  const list = document.createElement("dl");
+  list.className = "vrd-summary__details";
+  list.append(
+    createDefinition("Accès", formatCurrency(vrd.detail.access)),
+    createDefinition("Tranchées", formatCurrency(vrd.detail.trenches)),
+    createDefinition("Raccordements", formatCurrency(vrd.detail.connections)),
+    createDefinition("Distance réseaux", formatCurrency(vrd.detail.networkDistanceExtra)),
+    createDefinition("Eaux pluviales", formatCurrency(vrd.detail.stormwater)),
+    createDefinition("Assainissement", formatCurrency(vrd.detail.individualSanitation))
+  );
+
+  return list;
+}
+
+function createVrdWarnings(vrd) {
+  const list = document.createElement("ul");
+  list.className = "vrd-summary__warnings";
+
+  vrd.warnings.forEach((warning) => {
+    list.append(createElement("li", "", warning));
+  });
+
+  if (vrd.warnings.length === 0) {
+    list.append(createElement("li", "", "Estimation VRD prête pour le budget global."));
   }
 
   return list;

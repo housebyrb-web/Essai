@@ -38,7 +38,9 @@
   .tax-summary__rates,
   .terrain-form,
   .terrain-summary__metrics,
-  .notaire-summary__details {
+  .notaire-summary__details,
+  .vrd-form,
+  .vrd-summary__details {
     grid-template-columns: 1fr;
   }
 
