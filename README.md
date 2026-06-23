@@ -118,6 +118,20 @@ Le module `js/vrd.js` permet désormais :
 Cette étape reste indicative : les devis concessionnaires, l'étude de sol, le SPANC et les contraintes
 d'accès chantier devront confirmer les montants.
 
+## Étape 10 - Module budget
+
+Le module `js/budget.js` permet désormais :
+
+- l'agrégation du terrain ;
+- l'agrégation des frais d'acquisition ;
+- l'agrégation des VRD ;
+- l'agrégation des taxes lorsque la commune est sélectionnée ;
+- l'ajout d'une provision d'aléas de 10 % ;
+- l'affichage des postes actifs et des postes restant à développer.
+
+Le budget global reste provisoire tant que les modules construction, équipements et extérieurs ne sont pas
+développés.
+
 ## Commandes
 
 ```bash

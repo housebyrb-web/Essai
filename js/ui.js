@@ -70,6 +70,12 @@ export function getVrdRefs(documentRef = document) {
   };
 }
 
+export function getBudgetRefs(documentRef = document) {
+  return {
+    summary: getElement(documentRef, "budgetSummary")
+  };
+}
+
 export function setCommuneSearchLoading(refs, isLoading) {
   refs.submitButton.disabled = isLoading;
   refs.submitButton.textContent = isLoading ? "Recherche..." : "Rechercher";
@@ -150,6 +156,14 @@ export function renderVrdSummary(refs, vrd, formatCurrency) {
     createVrdAmount(vrd, formatCurrency),
     createVrdDetails(vrd, formatCurrency),
     createVrdWarnings(vrd)
+  );
+}
+
+export function renderBudgetSummary(refs, budget, formatCurrency) {
+  refs.summary.replaceChildren(
+    createBudgetAmount(budget, formatCurrency),
+    createBudgetItems(budget, formatCurrency),
+    createBudgetWarnings(budget)
   );
 }
 
@@ -383,6 +397,44 @@ function createVrdWarnings(vrd) {
 
   if (vrd.warnings.length === 0) {
     list.append(createElement("li", "", "Estimation VRD prête pour le budget global."));
+  }
+
+  return list;
+}
+
+function createBudgetAmount(budget, formatCurrency) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "budget-summary__amount";
+  wrapper.append(
+    createElement("p", "budget-summary__label", "Budget provisoire"),
+    createElement("p", "budget-summary__value", formatCurrency(budget.total)),
+    createElement("p", "budget-summary__muted", `Sous-total : ${formatCurrency(budget.subtotal)} · Aléas : ${formatCurrency(budget.contingency)}`)
+  );
+
+  return wrapper;
+}
+
+function createBudgetItems(budget, formatCurrency) {
+  const list = document.createElement("dl");
+  list.className = "budget-summary__items";
+  budget.items.forEach((item) => {
+    const value = item.amount > 0 ? formatCurrency(item.amount) : item.status;
+    list.append(createDefinition(item.label, value));
+  });
+
+  return list;
+}
+
+function createBudgetWarnings(budget) {
+  const list = document.createElement("ul");
+  list.className = "budget-summary__warnings";
+
+  budget.warnings.forEach((warning) => {
+    list.append(createElement("li", "", warning));
+  });
+
+  if (budget.warnings.length === 0) {
+    list.append(createElement("li", "", "Tous les postes du budget global sont renseignés."));
   }
 
   return list;

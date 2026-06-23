@@ -40,7 +40,8 @@
   .terrain-summary__metrics,
   .notaire-summary__details,
   .vrd-form,
-  .vrd-summary__details {
+  .vrd-summary__details,
+  .budget-summary__items {
     grid-template-columns: 1fr;
   }
 

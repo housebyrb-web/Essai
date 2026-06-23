@@ -1,3 +1,4 @@
+import { calculateBudget } from "./budget.js";
 import { calculateProject } from "./calculator.js";
 import { searchCommunes } from "./communes.js";
 import { calculateNotaireFees } from "./notaire.js";
@@ -6,10 +7,12 @@ import { calculateTerrain } from "./terrain.js";
 import { calculateVrd } from "./vrd.js";
 import {
   clearCommuneResults,
+  getBudgetRefs,
   getCommuneSearchRefs,
   getTerrainRefs,
   getVrdRefs,
   initUi,
+  renderBudgetSummary,
   renderCommuneResults,
   renderNotaireSummary,
   renderSelectedCommune,
@@ -27,6 +30,7 @@ import { formatCurrency } from "./utils.js";
 const appState = {
   selectedCommune: null,
   taxRates: null,
+  taxEstimate: null,
   terrain: {
     landPrice: 0,
     landSurface: 0
@@ -45,6 +49,7 @@ export function initApp(documentRef = document) {
   initCommuneSearch(documentRef);
   initTerrainForm(documentRef);
   initVrdForm(documentRef);
+  renderBudget(documentRef);
   calculateProject();
   updateStatus(documentRef, "Recherche commune prête");
 }
@@ -76,6 +81,7 @@ function renderTerrain(documentRef, refs) {
   const notaireFees = calculateNotaireFees(appState.terrain);
   renderTerrainSummary(refs, terrain, formatCurrency);
   renderNotaireSummary(refs, notaireFees, formatCurrency);
+  renderBudget(documentRef);
 
   if (terrain.isComplete) {
     updateStatus(documentRef, `Terrain ${formatCurrency(terrain.landPrice)}`);
@@ -109,6 +115,7 @@ function getVrdInput(refs) {
 function renderVrd(documentRef, refs) {
   const vrd = calculateVrd(appState.vrd);
   renderVrdSummary(refs, vrd, formatCurrency);
+  renderBudget(documentRef);
 
   if (vrd.total > 0) {
     updateStatus(documentRef, `VRD ${formatCurrency(vrd.total)}`);
@@ -162,13 +169,30 @@ async function selectCommune(documentRef, refs, commune) {
     const rates = await fetchTaxRatesForCommune(commune);
     const estimate = calculateTaxes(createDefaultTaxInput(commune, rates));
     appState.taxRates = rates;
+    appState.taxEstimate = estimate;
     renderTaxSummary(refs, rates, estimate, formatCurrency);
+    renderBudget(documentRef);
     updateStatus(documentRef, `Taux fiscaux chargés ${commune.codeInsee}`);
   } catch (error) {
     console.error(error);
     renderTaxSummaryError(refs);
     updateStatus(documentRef, `Commune INSEE ${commune.codeInsee}`);
   }
+}
+
+function renderBudget(documentRef) {
+  const refs = getBudgetRefs(documentRef);
+  const terrain = calculateTerrain(appState.terrain);
+  const notaire = calculateNotaireFees(appState.terrain);
+  const vrd = calculateVrd(appState.vrd);
+  const budget = calculateBudget({
+    terrain,
+    notaire,
+    vrd,
+    taxes: appState.taxEstimate
+  });
+
+  renderBudgetSummary(refs, budget, formatCurrency);
 }
 
 if (typeof document !== "undefined") {
