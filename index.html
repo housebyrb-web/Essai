@@ -43,12 +43,37 @@
           </aside>
 
           <section class="wizard-card" aria-labelledby="currentStepTitle">
-            <p class="eyebrow">Étape préparatoire</p>
-            <h2 id="currentStepTitle">Structure V2 prête à recevoir les modules métier</h2>
+            <p class="eyebrow">Étape 1</p>
+            <h2 id="currentStepTitle">Identifier la commune du projet</h2>
             <p id="currentStepDescription">
-              Les champs, calculateurs, données officielles, sauvegardes, graphiques et exports PDF seront
-              branchés progressivement pour garantir une base fiable.
+              La commune permet de récupérer le code INSEE, le département et la région. Ces données
+              serviront ensuite aux taxes et aux barèmes locaux.
             </p>
+
+            <form class="commune-search" id="communeSearchForm" autocomplete="off">
+              <label class="commune-search__label" for="communeSearchInput">
+                Commune ou code postal
+              </label>
+              <div class="commune-search__controls">
+                <input
+                  class="commune-search__input"
+                  id="communeSearchInput"
+                  name="commune"
+                  type="search"
+                  minlength="2"
+                  placeholder="Ex. Nantes ou 44000"
+                  aria-describedby="communeSearchHelp communeSearchStatus"
+                >
+                <button class="commune-search__button" type="submit">Rechercher</button>
+              </div>
+              <p class="commune-search__help" id="communeSearchHelp">
+                Source officielle : API Découpage administratif geo.api.gouv.fr.
+              </p>
+              <p class="commune-search__status" id="communeSearchStatus" role="status"></p>
+            </form>
+
+            <div class="commune-results" id="communeResults" aria-live="polite"></div>
+            <article class="commune-selected" id="selectedCommune" hidden></article>
 
             <div class="module-grid" id="moduleGrid" aria-label="Modules applicatifs"></div>
           </section>

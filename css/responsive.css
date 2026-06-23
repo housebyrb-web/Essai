@@ -33,6 +33,11 @@
     grid-template-columns: 1fr;
   }
 
+  .commune-search__controls,
+  .commune-selected dl {
+    grid-template-columns: 1fr;
+  }
+
   .brand__baseline,
   .app-header__status {
     font-size: 0.78rem;

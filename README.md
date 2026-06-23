@@ -44,6 +44,21 @@ images/
 - PWA préparée avec manifest et service worker.
 - Les commentaires techniques doivent rester en français.
 
+## Étape 5 - Module communes
+
+Le module `js/communes.js` permet désormais :
+
+- la recherche par nom de commune ;
+- la recherche par code postal ;
+- la récupération du code INSEE ;
+- la normalisation du département et de la région ;
+- la gestion d'erreurs explicites ;
+- un cache mémoire pour éviter les appels répétés identiques.
+
+Source utilisée : API officielle `geo.api.gouv.fr`.
+
+Les taux de taxe d'aménagement ne sont pas encore branchés : ils seront traités dans le module `taxe.js`.
+
 ## Commandes
 
 ```bash

@@ -36,6 +36,43 @@ export function updateStatus(documentRef, message) {
   }
 }
 
+export function getCommuneSearchRefs(documentRef = document) {
+  return {
+    form: getElement(documentRef, "communeSearchForm"),
+    input: getElement(documentRef, "communeSearchInput"),
+    results: getElement(documentRef, "communeResults"),
+    selected: getElement(documentRef, "selectedCommune"),
+    status: getElement(documentRef, "communeSearchStatus"),
+    submitButton: documentRef.querySelector("#communeSearchForm button[type='submit']")
+  };
+}
+
+export function setCommuneSearchLoading(refs, isLoading) {
+  refs.submitButton.disabled = isLoading;
+  refs.submitButton.textContent = isLoading ? "Recherche..." : "Rechercher";
+}
+
+export function setCommuneSearchMessage(refs, message, state = "info") {
+  refs.status.textContent = message;
+  refs.status.dataset.state = state;
+}
+
+export function renderCommuneResults(refs, communes, onSelect) {
+  refs.results.replaceChildren(...communes.map((commune) => createCommuneResult(commune, onSelect)));
+}
+
+export function renderSelectedCommune(refs, commune) {
+  refs.selected.hidden = false;
+  refs.selected.replaceChildren(
+    createElement("h3", "", commune.nom),
+    createSelectedCommuneDetails(commune)
+  );
+}
+
+export function clearCommuneResults(refs) {
+  refs.results.replaceChildren();
+}
+
 function renderWizardSteps(documentRef) {
   const container = documentRef.getElementById("wizardSteps");
 
@@ -49,7 +86,7 @@ function createWizardStep(title, index) {
   const number = createElement("span", "wizard-step__index", String(index + 1).padStart(2, "0"));
   const content = createElement("span", "wizard-step__content");
   const label = createElement("span", "wizard-step__title", title);
-  const status = createElement("span", "wizard-step__status", index === 0 ? "À développer" : "Planifié");
+  const status = createElement("span", "wizard-step__status", index === 0 ? "En cours" : "Planifié");
 
   content.append(label, status);
   item.append(number, content);
@@ -74,4 +111,56 @@ function createModuleCard([name, description]) {
   card.append(title, text);
 
   return card;
+}
+
+function createCommuneResult(commune, onSelect) {
+  const button = document.createElement("button");
+  const name = createElement("span", "commune-result__name", commune.nom);
+  const meta = createElement("span", "commune-result__meta", getCommuneMeta(commune));
+
+  button.type = "button";
+  button.className = "commune-result";
+  button.append(name, meta);
+  button.addEventListener("click", () => onSelect(commune));
+
+  return button;
+}
+
+function createSelectedCommuneDetails(commune) {
+  const list = document.createElement("dl");
+  list.append(
+    createDefinition("Code INSEE", commune.codeInsee),
+    createDefinition("Code postal", commune.codesPostaux.join(", ") || "-"),
+    createDefinition("Département", commune.departement?.nom || "-"),
+    createDefinition("Région", commune.region?.nom || "-")
+  );
+
+  return list;
+}
+
+function createDefinition(term, description) {
+  const wrapper = document.createElement("div");
+  const dt = createElement("dt", "", term);
+  const dd = createElement("dd", "", description);
+
+  wrapper.append(dt, dd);
+
+  return wrapper;
+}
+
+function getCommuneMeta(commune) {
+  const postalCodes = commune.codesPostaux.join(", ");
+  const department = commune.departement?.nom || "département inconnu";
+
+  return `${postalCodes} · INSEE ${commune.codeInsee} · ${department}`;
+}
+
+function getElement(documentRef, id) {
+  const element = documentRef.getElementById(id);
+
+  if (!element) {
+    throw new Error(`Élément introuvable : ${id}`);
+  }
+
+  return element;
 }
