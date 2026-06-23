@@ -832,6 +832,131 @@ h2 {
   font-size: 0.9rem;
 }
 
+.construction-panel {
+  padding: 22px;
+  margin-top: 24px;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow-panel);
+}
+
+.construction-panel h2 {
+  margin-bottom: 8px;
+}
+
+.construction-form {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.construction-form__field {
+  display: grid;
+  gap: 8px;
+}
+
+.construction-form__field label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.construction-form__field select {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 18px;
+  color: var(--color-text);
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+}
+
+.construction-form__field select:focus {
+  outline: 3px solid rgba(236, 95, 126, 0.26);
+  outline-offset: 2px;
+}
+
+.construction-summary {
+  padding: 18px;
+  margin-top: 16px;
+  background: linear-gradient(180deg, var(--color-panel), #ffffff);
+  border: 1px solid rgba(236, 95, 126, 0.18);
+  border-radius: var(--radius-medium);
+}
+
+.construction-summary h3 {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+}
+
+.construction-summary__amount {
+  padding: 16px;
+  color: #ffffff;
+  background: var(--color-text);
+  border-radius: var(--radius-medium);
+}
+
+.construction-summary__label,
+.construction-summary__value {
+  margin-bottom: 4px;
+}
+
+.construction-summary__label {
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.construction-summary__value {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 850;
+  letter-spacing: -0.05em;
+}
+
+.construction-summary__muted {
+  margin-bottom: 0;
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 0.9rem;
+}
+
+.construction-summary__details {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 14px 0 0;
+}
+
+.construction-summary__details div {
+  padding: 10px;
+  background: #ffffff;
+  border-radius: 14px;
+}
+
+.construction-summary__details dt {
+  color: var(--color-faint);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.construction-summary__details dd {
+  margin: 2px 0 0;
+  font-weight: 850;
+}
+
+.construction-summary__warnings {
+  padding-left: 18px;
+  margin: 12px 0 0;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
 .module-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

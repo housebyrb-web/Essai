@@ -147,8 +147,57 @@
               </section>
             </section>
 
-            <section class="budget-panel" aria-labelledby="budgetTitle">
+            <section class="construction-panel" aria-labelledby="constructionTitle">
               <p class="eyebrow">Étape 4</p>
+              <h2 id="constructionTitle">Chiffrer la maison</h2>
+              <p>
+                Le coût de construction est estimé à partir de la surface habitable, du niveau de
+                prestations, de la toiture et du chauffage.
+              </p>
+
+              <form class="construction-form" id="constructionForm" autocomplete="off">
+                <div class="construction-form__field">
+                  <label for="livingSurfaceInput">Surface habitable</label>
+                  <div class="field-with-suffix">
+                    <input id="livingSurfaceInput" name="livingSurface" type="number" min="0" step="1" placeholder="Ex. 120">
+                    <span>m²</span>
+                  </div>
+                </div>
+                <div class="construction-form__field">
+                  <label for="prestationLevelInput">Prestations</label>
+                  <select id="prestationLevelInput" name="prestationLevel">
+                    <option value="economique">Économique</option>
+                    <option value="standard" selected>Standard</option>
+                    <option value="confort">Confort</option>
+                    <option value="hautDeGamme">Haut de gamme</option>
+                    <option value="prestige">Prestige</option>
+                  </select>
+                </div>
+                <div class="construction-form__field">
+                  <label for="roofTypeInput">Toiture</label>
+                  <select id="roofTypeInput" name="roofType">
+                    <option value="tuiles" selected>Tuiles</option>
+                    <option value="ardoise">Ardoise</option>
+                    <option value="zinc">Zinc</option>
+                    <option value="toitPlat">Toit plat</option>
+                  </select>
+                </div>
+                <div class="construction-form__field">
+                  <label for="heatingTypeInput">Chauffage</label>
+                  <select id="heatingTypeInput" name="heatingType">
+                    <option value="pompeAChaleur" selected>Pompe à chaleur</option>
+                    <option value="gaz">Gaz</option>
+                    <option value="poele">Poêle</option>
+                    <option value="geothermie">Géothermie</option>
+                  </select>
+                </div>
+              </form>
+
+              <article class="construction-summary" id="constructionSummary" aria-live="polite"></article>
+            </section>
+
+            <section class="budget-panel" aria-labelledby="budgetTitle">
+              <p class="eyebrow">Étape 5</p>
               <h2 id="budgetTitle">Budget global provisoire</h2>
               <p>
                 Cette synthèse agrège les modules déjà validés et ajoute une provision d'aléas.

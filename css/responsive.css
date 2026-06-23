@@ -41,7 +41,9 @@
   .notaire-summary__details,
   .vrd-form,
   .vrd-summary__details,
-  .budget-summary__items {
+  .budget-summary__items,
+  .construction-form,
+  .construction-summary__details {
     grid-template-columns: 1fr;
   }
 

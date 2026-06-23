@@ -70,6 +70,17 @@ export function getVrdRefs(documentRef = document) {
   };
 }
 
+export function getConstructionRefs(documentRef = document) {
+  return {
+    form: getElement(documentRef, "constructionForm"),
+    livingSurfaceInput: getElement(documentRef, "livingSurfaceInput"),
+    prestationLevelInput: getElement(documentRef, "prestationLevelInput"),
+    roofTypeInput: getElement(documentRef, "roofTypeInput"),
+    heatingTypeInput: getElement(documentRef, "heatingTypeInput"),
+    summary: getElement(documentRef, "constructionSummary")
+  };
+}
+
 export function getBudgetRefs(documentRef = document) {
   return {
     summary: getElement(documentRef, "budgetSummary")
@@ -164,6 +175,15 @@ export function renderBudgetSummary(refs, budget, formatCurrency) {
     createBudgetAmount(budget, formatCurrency),
     createBudgetItems(budget, formatCurrency),
     createBudgetWarnings(budget)
+  );
+}
+
+export function renderConstructionSummary(refs, construction, formatCurrency) {
+  refs.summary.replaceChildren(
+    createElement("h3", "", "Synthèse construction"),
+    createConstructionAmount(construction, formatCurrency),
+    createConstructionDetails(construction, formatCurrency),
+    createConstructionWarnings(construction)
   );
 }
 
@@ -402,6 +422,48 @@ function createVrdWarnings(vrd) {
   return list;
 }
 
+function createConstructionAmount(construction, formatCurrency) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "construction-summary__amount";
+  wrapper.append(
+    createElement("p", "construction-summary__label", "Estimation maison"),
+    createElement("p", "construction-summary__value", formatCurrency(construction.total)),
+    createElement("p", "construction-summary__muted", `${formatCurrency(construction.adjustedPricePerM2)}/m² · fourchette ${formatCurrency(construction.range.low)} - ${formatCurrency(construction.range.high)}`)
+  );
+
+  return wrapper;
+}
+
+function createConstructionDetails(construction, formatCurrency) {
+  const list = document.createElement("dl");
+  list.className = "construction-summary__details";
+  list.append(
+    createDefinition("Surface", construction.livingSurface > 0 ? `${formatNumber(construction.livingSurface)} m²` : "-"),
+    createDefinition("Base prestations", `${formatCurrency(construction.basePricePerM2)}/m²`),
+    createDefinition("Coefficient toiture", formatCoefficient(construction.coefficients.roof)),
+    createDefinition("Coefficient chauffage", formatCoefficient(construction.coefficients.heating)),
+    createDefinition("Coefficient surface", formatCoefficient(construction.coefficients.size)),
+    createDefinition("Total maison", formatCurrency(construction.total))
+  );
+
+  return list;
+}
+
+function createConstructionWarnings(construction) {
+  const list = document.createElement("ul");
+  list.className = "construction-summary__warnings";
+
+  construction.warnings.forEach((warning) => {
+    list.append(createElement("li", "", warning));
+  });
+
+  if (construction.warnings.length === 0) {
+    list.append(createElement("li", "", "Estimation construction prête pour le budget global."));
+  }
+
+  return list;
+}
+
 function createBudgetAmount(budget, formatCurrency) {
   const wrapper = document.createElement("div");
   wrapper.className = "budget-summary__amount";
@@ -449,6 +511,13 @@ function formatPercent(value) {
 function formatNumber(value) {
   return new Intl.NumberFormat("fr-FR", {
     maximumFractionDigits: 0
+  }).format(value || 0);
+}
+
+function formatCoefficient(value) {
+  return new Intl.NumberFormat("fr-FR", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
   }).format(value || 0);
 }
 

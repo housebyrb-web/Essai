@@ -132,6 +132,21 @@ Le module `js/budget.js` permet désormais :
 Le budget global reste provisoire tant que les modules construction, équipements et extérieurs ne sont pas
 développés.
 
+## Étape 11 - Module construction
+
+Le module `js/calculator.js` permet désormais :
+
+- le calcul du coût de construction maison ;
+- la prise en compte de la surface habitable ;
+- la prise en compte du niveau de prestations ;
+- la prise en compte du type de toiture ;
+- la prise en compte du type de chauffage ;
+- l'application d'un coefficient de taille ;
+- la production d'une fourchette basse / haute ;
+- l'intégration du poste construction dans le budget global.
+
+Les barèmes sont centralisés dans `data/construction-costs.js` pour faciliter les ajustements métier.
+
 ## Commandes
 
 ```bash

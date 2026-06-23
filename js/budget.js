@@ -4,7 +4,7 @@ export function calculateBudget(parts = {}) {
     createBudgetItem("notaire", "Frais d'acquisition", parts.notaire?.total, "validé"),
     createBudgetItem("vrd", "VRD et raccordements", parts.vrd?.total, "validé"),
     createBudgetItem("taxes", "Taxes d'urbanisme", parts.taxes?.total, parts.taxes ? "validé" : "à compléter"),
-    createBudgetItem("construction", "Construction maison", parts.construction?.total, "à développer"),
+    createBudgetItem("construction", "Construction maison", parts.construction?.total, parts.construction?.total > 0 ? "validé" : "à compléter"),
     createBudgetItem("equipements", "Équipements et extérieurs", parts.equipements?.total, "à développer")
   ];
   const activeItems = items.filter((item) => item.amount > 0);

@@ -1,5 +1,5 @@
 import { calculateBudget } from "./budget.js";
-import { calculateProject } from "./calculator.js";
+import { calculateConstruction, calculateProject } from "./calculator.js";
 import { searchCommunes } from "./communes.js";
 import { calculateNotaireFees } from "./notaire.js";
 import { calculateTaxes, createDefaultTaxInput, fetchTaxRatesForCommune } from "./taxe.js";
@@ -9,11 +9,13 @@ import {
   clearCommuneResults,
   getBudgetRefs,
   getCommuneSearchRefs,
+  getConstructionRefs,
   getTerrainRefs,
   getVrdRefs,
   initUi,
   renderBudgetSummary,
   renderCommuneResults,
+  renderConstructionSummary,
   renderNotaireSummary,
   renderSelectedCommune,
   renderTerrainSummary,
@@ -41,6 +43,12 @@ const appState = {
     networkDistance: 0,
     includeStormwater: true,
     needsIndividualSanitation: false
+  },
+  construction: {
+    livingSurface: 0,
+    prestationLevel: "standard",
+    roofType: "tuiles",
+    heatingType: "pompeAChaleur"
   }
 };
 
@@ -49,6 +57,7 @@ export function initApp(documentRef = document) {
   initCommuneSearch(documentRef);
   initTerrainForm(documentRef);
   initVrdForm(documentRef);
+  initConstructionForm(documentRef);
   renderBudget(documentRef);
   calculateProject();
   updateStatus(documentRef, "Recherche commune prête");
@@ -122,6 +131,39 @@ function renderVrd(documentRef, refs) {
   }
 }
 
+function initConstructionForm(documentRef) {
+  const refs = getConstructionRefs(documentRef);
+
+  refs.form.addEventListener("input", () => {
+    appState.construction = getConstructionInput(refs);
+    renderConstruction(documentRef, refs);
+  });
+  refs.form.addEventListener("change", () => {
+    appState.construction = getConstructionInput(refs);
+    renderConstruction(documentRef, refs);
+  });
+  renderConstruction(documentRef, refs);
+}
+
+function getConstructionInput(refs) {
+  return {
+    livingSurface: refs.livingSurfaceInput.value,
+    prestationLevel: refs.prestationLevelInput.value,
+    roofType: refs.roofTypeInput.value,
+    heatingType: refs.heatingTypeInput.value
+  };
+}
+
+function renderConstruction(documentRef, refs) {
+  const construction = calculateConstruction(appState.construction);
+  renderConstructionSummary(refs, construction, formatCurrency);
+  renderBudget(documentRef);
+
+  if (construction.total > 0) {
+    updateStatus(documentRef, `Maison ${formatCurrency(construction.total)}`);
+  }
+}
+
 async function handleCommuneSearch(documentRef, refs) {
   const query = refs.input.value.trim();
 
@@ -185,11 +227,13 @@ function renderBudget(documentRef) {
   const terrain = calculateTerrain(appState.terrain);
   const notaire = calculateNotaireFees(appState.terrain);
   const vrd = calculateVrd(appState.vrd);
+  const construction = calculateConstruction(appState.construction);
   const budget = calculateBudget({
     terrain,
     notaire,
     vrd,
-    taxes: appState.taxEstimate
+    taxes: appState.taxEstimate,
+    construction
   });
 
   renderBudgetSummary(refs, budget, formatCurrency);
