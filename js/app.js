@@ -1,5 +1,6 @@
 import { calculateProject } from "./calculator.js";
 import { searchCommunes } from "./communes.js";
+import { calculateNotaireFees } from "./notaire.js";
 import { calculateTaxes, createDefaultTaxInput, fetchTaxRatesForCommune } from "./taxe.js";
 import { calculateTerrain } from "./terrain.js";
 import {
@@ -8,6 +9,7 @@ import {
   getTerrainRefs,
   initUi,
   renderCommuneResults,
+  renderNotaireSummary,
   renderSelectedCommune,
   renderTerrainSummary,
   renderTaxSummary,
@@ -60,7 +62,9 @@ function initTerrainForm(documentRef) {
 
 function renderTerrain(documentRef, refs) {
   const terrain = calculateTerrain(appState.terrain);
+  const notaireFees = calculateNotaireFees(appState.terrain);
   renderTerrainSummary(refs, terrain, formatCurrency);
+  renderNotaireSummary(refs, notaireFees, formatCurrency);
 
   if (terrain.isComplete) {
     updateStatus(documentRef, `Terrain ${formatCurrency(terrain.landPrice)}`);

@@ -53,6 +53,7 @@ export function getTerrainRefs(documentRef = document) {
     form: getElement(documentRef, "terrainForm"),
     landPriceInput: getElement(documentRef, "landPriceInput"),
     landSurfaceInput: getElement(documentRef, "landSurfaceInput"),
+    notaireSummary: getElement(documentRef, "notaireSummary"),
     summary: getElement(documentRef, "terrainSummary")
   };
 }
@@ -119,6 +120,15 @@ export function renderTerrainSummary(refs, terrain, formatCurrency) {
     createElement("h3", "", "Synthèse terrain"),
     createTerrainMetrics(terrain, formatCurrency),
     createTerrainWarnings(terrain)
+  );
+}
+
+export function renderNotaireSummary(refs, notaireFees, formatCurrency) {
+  refs.notaireSummary.replaceChildren(
+    createElement("h3", "", "Frais d'acquisition"),
+    createNotaireAmount(notaireFees, formatCurrency),
+    createNotaireDetails(notaireFees, formatCurrency),
+    createNotaireWarnings(notaireFees)
   );
 }
 
@@ -268,6 +278,48 @@ function createTerrainWarnings(terrain) {
 
   if (terrain.warnings.length === 0) {
     list.append(createElement("li", "", "Données terrain suffisantes pour les prochains calculateurs."));
+  }
+
+  return list;
+}
+
+function createNotaireAmount(notaireFees, formatCurrency) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "notaire-summary__amount";
+  wrapper.append(
+    createElement("p", "notaire-summary__label", "Estimation indicative"),
+    createElement("p", "notaire-summary__value", formatCurrency(notaireFees.total)),
+    createElement("p", "notaire-summary__muted", `Taux effectif estimé : ${formatPercent(notaireFees.effectiveRate * 100)} %`)
+  );
+
+  return wrapper;
+}
+
+function createNotaireDetails(notaireFees, formatCurrency) {
+  const list = document.createElement("dl");
+  list.className = "notaire-summary__details";
+  list.append(
+    createDefinition("Droits de mutation", formatCurrency(notaireFees.detail.transferDuties)),
+    createDefinition("Sécurité immobilière", formatCurrency(notaireFees.detail.realEstateSecurity)),
+    createDefinition("Émoluments", formatCurrency(notaireFees.detail.emoluments)),
+    createDefinition("TVA émoluments", formatCurrency(notaireFees.detail.emolumentsVat)),
+    createDefinition("Formalités", formatCurrency(notaireFees.detail.formalities)),
+    createDefinition("Débours", formatCurrency(notaireFees.detail.disbursements))
+  );
+
+  return list;
+}
+
+function createNotaireWarnings(notaireFees) {
+  const list = document.createElement("ul");
+  list.className = "notaire-summary__warnings";
+
+  notaireFees.warnings.forEach((warning) => {
+    list.append(createElement("li", "", warning));
+  });
+
+  if (notaireFees.warnings.length === 0) {
+    list.append(createElement("li", "", "Estimation prête pour le budget global."));
   }
 
   return list;

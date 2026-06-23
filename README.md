@@ -87,6 +87,21 @@ Le module `js/terrain.js` permet désormais :
 
 Cette étape ne traite pas encore les VRD, les raccordements, le PLU ou la constructibilité fine.
 
+## Étape 8 - Module notaire
+
+Le module `js/notaire.js` permet désormais :
+
+- le calcul indicatif des droits de mutation ;
+- le calcul de la contribution de sécurité immobilière ;
+- le calcul des émoluments proportionnels par tranches ;
+- le calcul de la TVA sur émoluments ;
+- l'ajout des formalités et débours indicatifs ;
+- le calcul du taux effectif estimé ;
+- l'affichage d'une synthèse liée au prix du terrain.
+
+Le calcul reste indicatif : le régime fiscal exact dépend de l'acte, du terrain, de la TVA éventuelle
+et doit être confirmé par le notaire.
+
 ## Commandes
 
 ```bash
