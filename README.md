@@ -1,30 +1,48 @@
-# House by RB
+# House by RB V2
 
-Base front statique pour House by RB, logiciel professionnel destiné aux maîtres d'oeuvre en maisons individuelles.
+Estimateur professionnel de coût de construction de maison individuelle en France.
 
-## Architecture
+Cette étape pose uniquement l'architecture V2. Les modules métier seront développés et validés un par un.
+
+## Architecture V2
 
 ```text
 index.html
 css/
-  main.css
+  style.css
+  responsive.css
 js/
-  content-loader.js
-  dom-renderer.js
-  main.js
-  navigation.js
+  app.js
+  ui.js
+  calculator.js
+  taxe.js
+  notaire.js
+  vrd.js
+  terrain.js
+  budget.js
+  communes.js
+  storage.js
+  pdf.js
+  charts.js
+  utils.js
 data/
-  site-content.json
+  construction-costs.js
+  taxe-defaults.js
+assets/
+  manifest.webmanifest
+  service-worker.js
 images/
+  logo-house-by-rb.svg
 ```
 
 ## Principes
 
-- HTML sémantique dans `index.html`.
-- Styles centralisés dans `css/main.css`.
-- JavaScript séparé en modules ES6 courts.
-- Données de présentation isolées dans `data/site-content.json`.
-- Aucune dépendance externe à ce stade.
+- Interface haut de gamme, minimaliste et responsive.
+- JavaScript ES modules sans dépendance inutile.
+- Modules métier indépendants.
+- Données réglementaires isolées dans `data/`.
+- PWA préparée avec manifest et service worker.
+- Les commentaires techniques doivent rester en français.
 
 ## Commandes
 

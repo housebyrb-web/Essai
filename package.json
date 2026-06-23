@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "check": "node --check js/content-loader.js && node --check js/dom-renderer.js && node --check js/main.js && node --check js/navigation.js",
+    "check": "node --check data/construction-costs.js && node --check data/taxe-defaults.js && node --check js/app.js && node --check js/ui.js && node --check js/calculator.js && node --check js/taxe.js && node --check js/notaire.js && node --check js/vrd.js && node --check js/terrain.js && node --check js/budget.js && node --check js/communes.js && node --check js/storage.js && node --check js/pdf.js && node --check js/charts.js && node --check js/utils.js",
     "serve": "python3 -m http.server 4173"
   }
 }

@@ -1,0 +1,248 @@
+:root {
+  --color-background: #ffffff;
+  --color-panel: #faf6ee;
+  --color-panel-strong: #f4ecdf;
+  --color-text: #111111;
+  --color-muted: rgba(17, 17, 17, 0.62);
+  --color-faint: rgba(17, 17, 17, 0.42);
+  --color-border: #eeeeee;
+  --color-accent: #ec5f7e;
+  --color-accent-dark: #d2486a;
+  --shadow-panel: 0 24px 80px rgba(17, 17, 17, 0.08);
+  --radius-large: 28px;
+  --radius-medium: 18px;
+  --container-width: 1180px;
+  --font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--color-background);
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  color: var(--color-text);
+  background: var(--color-background);
+  font-family: var(--font-family);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.app-shell {
+  width: min(100% - 32px, var(--container-width));
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 28px 0 56px;
+}
+
+.app-header {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0 34px;
+}
+
+.brand {
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.brand__logo {
+  display: block;
+  border-radius: 14px;
+  box-shadow: 0 14px 28px rgba(236, 95, 126, 0.22);
+}
+
+.brand__content {
+  display: grid;
+  gap: 2px;
+}
+
+.brand__name {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.brand__baseline,
+.app-header__status {
+  color: var(--color-muted);
+  font-size: 0.82rem;
+}
+
+.app-header__status {
+  padding: 8px 12px;
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+}
+
+.app-main {
+  display: grid;
+  gap: 24px;
+}
+
+.hero-panel {
+  padding: clamp(34px, 7vw, 72px);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top right, rgba(236, 95, 126, 0.16), transparent 36%),
+    var(--color-panel);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow-panel);
+}
+
+.eyebrow {
+  margin: 0 0 14px;
+  color: var(--color-accent-dark);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  max-width: 850px;
+  margin-bottom: 18px;
+  font-size: clamp(2.4rem, 6vw, 5.4rem);
+  line-height: 0.96;
+  letter-spacing: -0.075em;
+}
+
+h2 {
+  margin-bottom: 12px;
+  font-size: clamp(1.7rem, 3vw, 2.7rem);
+  line-height: 1.05;
+  letter-spacing: -0.055em;
+}
+
+.hero-panel p:not(.eyebrow),
+.wizard-card p:not(.eyebrow) {
+  max-width: 760px;
+  color: var(--color-muted);
+  font-size: 1.03rem;
+}
+
+.wizard-layout {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.wizard-steps,
+.wizard-card {
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow-panel);
+}
+
+.wizard-steps {
+  position: sticky;
+  top: 24px;
+  padding: 22px;
+}
+
+.wizard-steps ol {
+  display: grid;
+  gap: 12px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.wizard-step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: start;
+  padding: 12px;
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+}
+
+.wizard-step__index {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  background: var(--color-text);
+  border-radius: 10px;
+}
+
+.wizard-step__title {
+  margin-bottom: 2px;
+  font-weight: 800;
+}
+
+.wizard-step__status {
+  color: var(--color-faint);
+  font-size: 0.82rem;
+}
+
+.wizard-card {
+  min-height: 430px;
+  padding: clamp(24px, 5vw, 44px);
+}
+
+.module-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.module-card {
+  min-height: 132px;
+  padding: 18px;
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+}
+
+.module-card__name {
+  margin-bottom: 8px;
+  font-weight: 850;
+  letter-spacing: -0.02em;
+}
+
+.module-card__description {
+  margin-bottom: 0;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.module-card[data-ready="true"] {
+  background: linear-gradient(180deg, var(--color-panel), var(--color-panel-strong));
+  border-color: rgba(236, 95, 126, 0.32);
+}

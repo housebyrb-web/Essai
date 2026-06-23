@@ -1,0 +1,17 @@
+{
+  "name": "House by RB",
+  "short_name": "House RB",
+  "description": "Estimateur professionnel de coût de construction de maison individuelle.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#111111",
+  "icons": [
+    {
+      "src": "/images/logo-house-by-rb.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

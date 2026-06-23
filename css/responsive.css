@@ -1,0 +1,51 @@
+@media (max-width: 920px) {
+  .app-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .wizard-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .wizard-steps {
+    position: static;
+  }
+
+  .module-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .app-shell {
+    width: min(100% - 24px, var(--container-width));
+    padding-top: 18px;
+  }
+
+  .hero-panel,
+  .wizard-card,
+  .wizard-steps {
+    border-radius: 20px;
+  }
+
+  .module-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .brand__baseline,
+  .app-header__status {
+    font-size: 0.78rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
