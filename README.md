@@ -57,7 +57,22 @@ Le module `js/communes.js` permet désormais :
 
 Source utilisée : API officielle `geo.api.gouv.fr`.
 
-Les taux de taxe d'aménagement ne sont pas encore branchés : ils seront traités dans le module `taxe.js`.
+## Étape 6 - Module taxe
+
+Le module `js/taxe.js` permet désormais :
+
+- la récupération des taux officiels DGFiP / DELTA depuis `data.economie.gouv.fr` ;
+- la recherche du taux communal par code INSEE ;
+- la récupération du taux départemental ;
+- la récupération du taux régional pour l'Île-de-France ;
+- la détection des communes sectorisées ;
+- le calcul de la taxe d'aménagement ;
+- le calcul de la redevance d'archéologie préventive ;
+- la prise en compte des 100 premiers m² avec abattement ;
+- la prise en compte des piscines et stationnements extérieurs.
+
+Sans adresse ni référence cadastrale, une commune sectorisée utilise le taux communal maximal afin d'éviter
+une sous-estimation. La sélection précise du secteur sera traitée dans une étape dédiée.
 
 ## Commandes
 

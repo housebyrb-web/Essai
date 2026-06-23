@@ -1,18 +1,24 @@
 import { calculateProject } from "./calculator.js";
 import { searchCommunes } from "./communes.js";
+import { calculateTaxes, createDefaultTaxInput, fetchTaxRatesForCommune } from "./taxe.js";
 import {
   clearCommuneResults,
   getCommuneSearchRefs,
   initUi,
   renderCommuneResults,
   renderSelectedCommune,
+  renderTaxSummary,
+  renderTaxSummaryError,
+  setTaxSummaryLoading,
   setCommuneSearchLoading,
   setCommuneSearchMessage,
   updateStatus
 } from "./ui.js";
+import { formatCurrency } from "./utils.js";
 
 const appState = {
-  selectedCommune: null
+  selectedCommune: null,
+  taxRates: null
 };
 
 export function initApp(documentRef = document) {
@@ -66,12 +72,25 @@ function handleCommuneResults(documentRef, refs, communes) {
   setCommuneSearchMessage(refs, `${communes.length} commune(s) trouvée(s).`);
 }
 
-function selectCommune(documentRef, refs, commune) {
+async function selectCommune(documentRef, refs, commune) {
   appState.selectedCommune = commune;
   renderSelectedCommune(refs, commune);
   clearCommuneResults(refs);
   setCommuneSearchMessage(refs, `Commune sélectionnée : ${commune.nom}.`);
-  updateStatus(documentRef, `Commune INSEE ${commune.codeInsee}`);
+  setTaxSummaryLoading(refs);
+  updateStatus(documentRef, `Chargement fiscal INSEE ${commune.codeInsee}`);
+
+  try {
+    const rates = await fetchTaxRatesForCommune(commune);
+    const estimate = calculateTaxes(createDefaultTaxInput(commune, rates));
+    appState.taxRates = rates;
+    renderTaxSummary(refs, rates, estimate, formatCurrency);
+    updateStatus(documentRef, `Taux fiscaux chargés ${commune.codeInsee}`);
+  } catch (error) {
+    console.error(error);
+    renderTaxSummaryError(refs);
+    updateStatus(documentRef, `Commune INSEE ${commune.codeInsee}`);
+  }
 }
 
 if (typeof document !== "undefined") {

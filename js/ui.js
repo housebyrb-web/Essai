@@ -43,7 +43,8 @@ export function getCommuneSearchRefs(documentRef = document) {
     results: getElement(documentRef, "communeResults"),
     selected: getElement(documentRef, "selectedCommune"),
     status: getElement(documentRef, "communeSearchStatus"),
-    submitButton: documentRef.querySelector("#communeSearchForm button[type='submit']")
+    submitButton: documentRef.querySelector("#communeSearchForm button[type='submit']"),
+    taxSummary: getElement(documentRef, "taxSummary")
   };
 }
 
@@ -71,6 +72,37 @@ export function renderSelectedCommune(refs, commune) {
 
 export function clearCommuneResults(refs) {
   refs.results.replaceChildren();
+}
+
+export function setTaxSummaryLoading(refs) {
+  refs.taxSummary.hidden = false;
+  refs.taxSummary.replaceChildren(
+    createElement("h3", "", "Fiscalité d'urbanisme"),
+    createElement("p", "tax-summary__muted", "Récupération des taux officiels DGFiP/DELTA...")
+  );
+}
+
+export function renderTaxSummary(refs, rates, estimate, formatCurrency) {
+  refs.taxSummary.hidden = false;
+  refs.taxSummary.replaceChildren(
+    createElement("h3", "", "Fiscalité d'urbanisme"),
+    createElement("p", "tax-summary__muted", `Source : ${rates.source}, année ${rates.year}.`),
+    createTaxRatesList(rates),
+    createTaxEstimate(estimate, formatCurrency),
+    createTaxWarnings(rates)
+  );
+}
+
+export function renderTaxSummaryError(refs) {
+  refs.taxSummary.hidden = false;
+  refs.taxSummary.replaceChildren(
+    createElement("h3", "", "Fiscalité d'urbanisme"),
+    createElement(
+      "p",
+      "tax-summary__error",
+      "Les taux officiels ne sont pas disponibles pour le moment. Le calcul fiscal sera relancé automatiquement plus tard."
+    )
+  );
 }
 
 function renderWizardSteps(documentRef) {
@@ -153,6 +185,53 @@ function getCommuneMeta(commune) {
   const department = commune.departement?.nom || "département inconnu";
 
   return `${postalCodes} · INSEE ${commune.codeInsee} · ${department}`;
+}
+
+function createTaxRatesList(rates) {
+  const list = document.createElement("dl");
+  list.className = "tax-summary__rates";
+  list.append(
+    createDefinition("Taux communal retenu", `${formatPercent(rates.communalPercent)} %`),
+    createDefinition("Taux départemental", `${formatPercent(rates.departmentalPercent)} %`),
+    createDefinition("Taux régional", `${formatPercent(rates.regionalPercent)} %`),
+    createDefinition("Archéologie préventive", `${formatPercent(rates.archaeologyPercent)} %`)
+  );
+
+  if (rates.isSectorized) {
+    list.append(createDefinition("Sectorisation", `${formatPercent(rates.communalMinPercent)} % à ${formatPercent(rates.communalMaxPercent)} %`));
+  }
+
+  return list;
+}
+
+function createTaxEstimate(estimate, formatCurrency) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "tax-summary__estimate";
+  wrapper.append(
+    createElement("p", "tax-summary__label", "Simulation indicative 120 m²"),
+    createElement("p", "tax-summary__amount", formatCurrency(estimate.total)),
+    createElement("p", "tax-summary__muted", `Taxe d'aménagement : ${formatCurrency(estimate.amenagement)} · RAP : ${formatCurrency(estimate.archaeology)}`)
+  );
+
+  return wrapper;
+}
+
+function createTaxWarnings(rates) {
+  const list = document.createElement("ul");
+  list.className = "tax-summary__warnings";
+
+  rates.warnings.forEach((warning) => {
+    const item = createElement("li", "", warning);
+    list.append(item);
+  });
+
+  return list;
+}
+
+function formatPercent(value) {
+  return new Intl.NumberFormat("fr-FR", {
+    maximumFractionDigits: 2
+  }).format(value || 0);
 }
 
 function getElement(documentRef, id) {
